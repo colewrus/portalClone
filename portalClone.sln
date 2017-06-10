@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "portalClone.CSharp.Plugins", "portalClone.CSharp.Plugins.csproj", "{CDC33A52-355A-DCEE-D385-8DB9391A3969}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "portalClone.CSharp", "portalClone.CSharp.csproj", "{4F82442A-03AE-FEEB-3977-6996C3E81229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "portalClone.CSharp.Editor", "portalClone.CSharp.Editor.csproj", "{7D223DD6-A36B-9153-F759-FF3D7FCC1BD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDC33A52-355A-DCEE-D385-8DB9391A3969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDC33A52-355A-DCEE-D385-8DB9391A3969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDC33A52-355A-DCEE-D385-8DB9391A3969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDC33A52-355A-DCEE-D385-8DB9391A3969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F82442A-03AE-FEEB-3977-6996C3E81229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F82442A-03AE-FEEB-3977-6996C3E81229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F82442A-03AE-FEEB-3977-6996C3E81229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F82442A-03AE-FEEB-3977-6996C3E81229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D223DD6-A36B-9153-F759-FF3D7FCC1BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D223DD6-A36B-9153-F759-FF3D7FCC1BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D223DD6-A36B-9153-F759-FF3D7FCC1BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D223DD6-A36B-9153-F759-FF3D7FCC1BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
