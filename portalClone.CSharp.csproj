@@ -78,7 +78,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\animationEvents.cs" />
     <Compile Include="Assets\platformer\scripts\placeBlocks.cs" />
+    <Compile Include="Assets\platformer_GM.cs" />
     <Compile Include="Assets\portalScript.cs" />
   </ItemGroup>
   <ItemGroup>
