@@ -14,6 +14,7 @@ public class placeBlocks : MonoBehaviour {
     public GameObject currentObj;
     public GameObject respawn;
 
+
     Vector3 mousePosition;
     Vector3 objectPos;
     Vector3 fineTune; //the player inputs from arrow keys to adjust the positioning of the object
@@ -33,6 +34,7 @@ public class placeBlocks : MonoBehaviour {
     public GameObject panel_Menu;
     public GameObject image_infoBubble;
     public GameObject panel_inventory;
+	public GameObject panel_Instructions;
 
    // Use this for initialization
    void Start () {
@@ -40,6 +42,7 @@ public class placeBlocks : MonoBehaviour {
 
         panel_Menu.SetActive(false);
         image_infoBubble.SetActive(false);
+		panel_Instructions.SetActive (false);
 
         blockCount = 0;
         fallenCount = 0;
@@ -230,6 +233,14 @@ public class placeBlocks : MonoBehaviour {
                     platformer_GM.instance.obj_coinList[i].SetActive(true);
             }
         }
+
+		if (Input.GetKeyDown (KeyCode.F1)) {
+			if (panel_Instructions.activeSelf) {
+				panel_Instructions.SetActive (false);
+			} else {
+				panel_Instructions.SetActive (true);
+			}
+		}
     }
 
 
