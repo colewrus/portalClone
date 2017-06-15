@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class placeBlocks : MonoBehaviour {
 
@@ -23,11 +24,18 @@ public class placeBlocks : MonoBehaviour {
     Ray ray;
 
 
+    //Game Manager Variables
+    public List<Vector3> rotations = new List<Vector3>(); //preset list of rotations for objects
+    int rotationPos; //the current rotation preset
+    public float timer;
+    public float timeLimit;
+    public List<GameObject> blocksPlaced = new List<GameObject>();
 
     //UI systems
     public Text text_blockCount;
     public Text text_fallenCount;
     public Text text_coins;
+    public Text text_Timer;
     int blockCount;
     int fallenCount;
     int coins;
@@ -35,6 +43,7 @@ public class placeBlocks : MonoBehaviour {
     public GameObject image_infoBubble;
     public GameObject panel_inventory;
 	public GameObject panel_Instructions;
+  
 
    // Use this for initialization
    void Start () {
@@ -47,6 +56,9 @@ public class placeBlocks : MonoBehaviour {
         blockCount = 0;
         fallenCount = 0;
         coins = 0;
+        rotationPos = 0;
+        init_distance = 5;
+        timer = 0; 
 
         setUI();
 
@@ -66,9 +78,10 @@ public class placeBlocks : MonoBehaviour {
         Vector3 rayDirection = Camera.main.transform.TransformDirection(Vector3.forward) * init_distance;
         Ray ray = new Ray(Camera.main.transform.position, rayDirection);
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward)*init_distance, Color.green);
-       // ray = new Ray(transform.position + Vector3.up, rayDirection);
-        
+        // ray = new Ray(transform.position + Vector3.up, rayDirection);
 
+
+        timerUpdate();
         if (Input.GetKey(KeyCode.Tab))
         {
             if(transform.position.y < -10)
@@ -84,41 +97,28 @@ public class placeBlocks : MonoBehaviour {
         {
             currentObj.transform.position = ray.origin + fineTune + ray.direction * init_distance;
 
-            if (Input.GetKeyDown(KeyCode.Insert))
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                fineTune.z += 1;
-            }   
-            if (Input.GetKeyDown(KeyCode.Delete))
-            {
-                fineTune.z -= 1;
+                if(rotationPos < rotations.Count-1)
+                {
+                    rotationPos++;
+                }else
+                {
+                    rotationPos = 0;
+                }
+               
+                Vector3 changeRot = rotations[rotationPos];
+                currentObj.transform.rotation = Quaternion.Euler(changeRot);
             }
-            if (Input.GetKeyDown(KeyCode.Home))
-            {
-                fineTune.x += 1;
-            }
-            if (Input.GetKeyDown(KeyCode.End))
-            {
-                fineTune.x -= 1;
-            }
-            if (Input.GetKeyDown(KeyCode.PageUp))
-            {
-                fineTune.y += 1;
-            }
-            if (Input.GetKeyDown(KeyCode.PageDown))
-            {
-                fineTune.y -= 1;
-            }
+
+          
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                Vector3 changeRot = currentObj.transform.rotation.eulerAngles;
-                changeRot.z += 5;
-                currentObj.transform.rotation = Quaternion.Euler(changeRot);
+                init_distance += 0.8f;
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                Vector3 changeRot = currentObj.transform.rotation.eulerAngles;
-                changeRot.z -= 5;
-                currentObj.transform.rotation = Quaternion.Euler(changeRot);
+                init_distance -= 0.8f;
             }
         }
 
@@ -138,7 +138,7 @@ public class placeBlocks : MonoBehaviour {
                     
                 }
                 lastRotation = currentObj.transform.eulerAngles;
-              
+                blocksPlaced.Add(currentObj);
                 blockCount++;
                 setUI();
                 currentObj = null;
@@ -163,8 +163,35 @@ public class placeBlocks : MonoBehaviour {
 	}
 
 
+    void timerUpdate()
+    {
+        if (timer < timeLimit)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            for (int i = 0; i < blocksPlaced.Count; i++)
+            {
+                Destroy(blocksPlaced[i]);
+                blocksPlaced.Remove(blocksPlaced[i]);
+            }
+        }
+        if (timer >= timeLimit && blocksPlaced.Count == 0)
+        {
+            timer = 0;
+        }
 
-       void number_Inputs()
+        float minutes = timer / 60;
+
+        float seconds = timer % 60;
+
+        text_Timer.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+        //text_Timer.text = text_Timer.text + "/" + string.Format("{0}:{1:00}", (timeLimit / 60), (timeLimit % 60));
+
+    }
+
+    void number_Inputs()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
