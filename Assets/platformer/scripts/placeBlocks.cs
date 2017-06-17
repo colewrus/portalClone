@@ -118,7 +118,14 @@ public class placeBlocks : MonoBehaviour {
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                init_distance -= 0.8f;
+                if(init_distance > 4.0f)
+                {
+                   init_distance -= 0.8f;
+                }else
+                {
+                    init_distance = 4;
+                }
+                
             }
         }
 
@@ -152,6 +159,9 @@ public class placeBlocks : MonoBehaviour {
             if (!panel_Menu.active)
             {               
                 panel_Menu.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }else
             {
                 panel_Menu.SetActive(false);
@@ -171,16 +181,9 @@ public class placeBlocks : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < blocksPlaced.Count; i++)
-            {
-                Destroy(blocksPlaced[i]);
-                blocksPlaced.Remove(blocksPlaced[i]);
-            }
-        }
-        if (timer >= timeLimit && blocksPlaced.Count == 0)
-        {
             timer = 0;
         }
+ 
 
         float minutes = timer / 60;
 
@@ -268,6 +271,15 @@ public class placeBlocks : MonoBehaviour {
 				panel_Instructions.SetActive (true);
 			}
 		}
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+           for(int i = 0; i < blocksPlaced.Count; i++)
+            {
+                Destroy(blocksPlaced[i]);
+            }
+            blocksPlaced.Clear();
+        }
     }
 
 
