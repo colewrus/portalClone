@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/3rdpersonPlatformer.unity
+- path: Assets/scenes/portalScene.unity
   isLoaded: 1
   isActive: 1

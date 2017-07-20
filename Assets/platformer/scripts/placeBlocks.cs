@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityStandardAssets.Characters.FirstPerson;
+
 
 public class placeBlocks : MonoBehaviour {
 
@@ -14,7 +16,7 @@ public class placeBlocks : MonoBehaviour {
 
     public GameObject currentObj;
     public GameObject respawn;
-
+    public FirstPersonController fpsScript;
 
     Vector3 mousePosition;
     Vector3 objectPos;
@@ -162,9 +164,14 @@ public class placeBlocks : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
+                fpsScript.m_MouseLook.lockCursor = false;
+                
             }else
             {
                 panel_Menu.SetActive(false);
+                fpsScript.m_MouseLook.lockCursor = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }
 
            
@@ -306,6 +313,9 @@ public class placeBlocks : MonoBehaviour {
     {
         Debug.Log("resume");
         panel_Menu.SetActive(false);
+        fpsScript.m_MouseLook.lockCursor = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
 
