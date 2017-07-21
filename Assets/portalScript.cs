@@ -39,9 +39,14 @@ public class portalScript : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit)) {       //Now we listen to see what kind of data we get back from the ray we just drew
 
                 if (hit.transform.tag == "portal") {    //Now that we have the attention of Physics let's see if our "hit" collides with a "transform" (the data about an object's position, rotation, size) that has a "tag" called "portal"
-                    portalIn.transform.position = hit.point + portalIn.transform.up;  //Hey we hit something that can hold a portal, let's put our portal at that spot we hit, 
+                    portalIn.transform.position = hit.point;  //Hey we hit something that can hold a portal, let's put our portal at that spot we hit, 
 
-                    portalIn.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0); // we're going to have the portal turn on the y-axis to match the player's                 
+                                 
+                    
+                    // Below deals with some complex math for rotation, Unity gives us tools to solve the math for us. It's hard to describe what is happening in a comment so I'll just say what it does
+                    portalIn.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);  //Let's align the object with the face of object we are hitting
+           
+                    portalIn.transform.position += (portalIn.transform.forward / 10);  //Personal space is important, we're going to move just a litte bit away form the object the portalIn spawns on
 
                     portalIn.SetActive (true);  //and we make the portalIn active
 				}
@@ -58,8 +63,13 @@ public class portalScript : MonoBehaviour {
 
 			if (Physics.Raycast (ray, out hit)) {
 				if (hit.transform.tag == "portal") {
-					portalOut.transform.position = hit.point + portalOut.transform.up; //we are setting the position of the portalOut here
-                    portalOut.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0); // we set the portal turn on the y-axis to match the player's   
+              
+
+					portalOut.transform.position = hit.point; //we are setting the position of the portalOut here
+
+                    // Below deals with some complex math for rotation, Unity gives us tools to solve the math for us. It's hard to describe what is happening in a comment so I'll just say what it does. See above comments
+                    portalOut.transform.rotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);             
+                    portalOut.transform.position += (portalOut.transform.forward/10);
                     portalOut.SetActive (true);
 				}
 			}
@@ -68,11 +78,10 @@ public class portalScript : MonoBehaviour {
 
 
     //WHOA! New function! Unity has built in functions that can help us out. This one listens for the object to collide with a Trigger
-    //We use the Collider col variable in order to take the Trigger we collided with and use it's data to do stuff
+    //We use the Collider col variable to store the data of the Trigger the we assigned in the Unity Editor
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.name == "portalIn" && portalOut.activeSelf) {    //if the object we collided with is a gameObject with the name "portalIn" and the out portal is active then we do something below
-			transform.position = portalOut.transform.position + portalOut.transform.forward * 5;    //we are going to make our position (stored in the transform, remember?) the out portal's position and a little bit forward to simulate our momentum walking through the portal
-            
+			transform.position = portalOut.transform.position + portalOut.transform.forward*2;    //we are going to make our position (stored in the transform, remember?) the out portal's position and a little bit forward to simulate our momentum walking through the portal            
 		}
 	}
 }
